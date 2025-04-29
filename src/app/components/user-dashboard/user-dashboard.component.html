@@ -1,0 +1,24 @@
+<mat-card class="user-dashboard-card">
+    <mat-card-title class="title">Welcome, {{ currentUser?.username }}</mat-card-title>
+    <mat-card-content>
+      <h3>Your Selected Movies/Series</h3>
+      <mat-list *ngIf="selectedMovies && selectedMovies.length; else noMovies">
+        <mat-list-item *ngFor="let movie of selectedMovies">
+          <div class="movie-info">
+            <span class="movie-title">{{ movie.title }}</span>
+            <span class="movie-genre">({{ movie.genre }})</span>
+            <span class="movie-rating" *ngIf="movie.rating">
+              - Your Rating:
+              <mat-icon *ngFor="let star of [1,2,3,4,5]">
+                {{ star <= movie.rating ? 'star' : 'star_border' }}
+              </mat-icon>
+            </span>
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <ng-template #noMovies>
+        <p>You haven't selected any movies or series yet.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+  

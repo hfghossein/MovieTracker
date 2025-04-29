@@ -1,0 +1,30 @@
+<mat-card class="movie-detail-card">
+    <mat-card-header>
+      <mat-card-title>{{ movie.title }}</mat-card-title>
+      <mat-card-subtitle>{{ movie.genre }}</mat-card-subtitle>   
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ movie.details }}</p>
+      <form [formGroup]="ratingForm" (ngSubmit)="rateMovie()">
+        <div class="rating-section">
+          <mat-form-field appearance="fill" class="rating-field">
+            <mat-label>Rate this movie/series</mat-label>
+            <input matInput type="number" formControlName="rating" min="0" max="5" />
+            <mat-error *ngIf="ratingForm.get('rating')?.hasError('required')">
+              Rating is required.
+            </mat-error>
+            <mat-error *ngIf="ratingForm.get('rating')?.hasError('min') || ratingForm.get('rating')?.hasError('max')">
+              Rating must be between 0 and 5.
+            </mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" [disabled]="ratingForm.invalid">
+            Save Rating
+          </button>
+          <button mat-button color="primary" routerLink="/movies">
+            <mat-icon>arrow_back</mat-icon> Back to List
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

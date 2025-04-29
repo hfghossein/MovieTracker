@@ -1,0 +1,16 @@
+<ng-container *ngIf="showNavbar">
+  <mat-toolbar color="primary">
+    <span>Movie/Series Tracker</span>
+    <span class="spacer"></span>
+    <nav>
+      <a mat-button routerLink="/movies" routerLinkActive="active">Movies</a>
+      <a mat-button routerLink="/user-dashboard" routerLinkActive="active" *ngIf="!isAdmin()">Dashboard</a>
+      <a mat-button routerLink="/admin-dashboard" routerLinkActive="active" *ngIf="isAdmin()">Admin</a>
+    </nav>
+    <button mat-button class="logout-button" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-toolbar>
+</ng-container>
+<router-outlet></router-outlet>

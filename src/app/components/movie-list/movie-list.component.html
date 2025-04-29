@@ -1,0 +1,74 @@
+<mat-card class="movie-list-card">
+  <mat-card-title>Movie/Series List</mat-card-title>
+  <mat-card-content>
+
+    <!-- Filtering Form -->
+    <form [formGroup]="searchForm">
+      <div class="filter-section">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Search</mat-label>
+          <input matInput formControlName="search" placeholder="Search by title" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Filter by Genre</mat-label>
+          <mat-select formControlName="genres" multiple>
+            <mat-option *ngFor="let genre of availableGenres" [value]="genre">{{ genre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <!-- Movies List -->
+    <mat-list>
+      <mat-list-item *ngFor="let movie of filteredMovies">
+        <div class="movie-info full-width">
+          <div class="movie-text">
+            <a [routerLink]="['/movie', movie.id]" class="movie-link">              
+              <span class="movie-title">{{ movie.title }}</span>
+              <span class="movie-genre">({{ movie.genre }})</span>            
+              <span class="movie-detail">Details: {{movie.details}}</span>
+            </a>
+          </div>
+
+          <div class="movie-actions">
+
+            <!-- Admin: Update -->
+            <ng-container *ngIf="isAdmin; else userActions">
+              <button mat-button color="primary" (click)="updateMovie(movie)">
+                <mat-icon>edit</mat-icon> Update
+              </button>
+            </ng-container>
+          
+            <!-- User Actions -->
+            <ng-template #userActions>
+              <!-- Select / Deselect -->
+              <button mat-button color="primary" (click)="toggleSelection(movie)">
+                <mat-icon>{{ isSelected(movie) ? 'check' : 'add' }}</mat-icon>
+                {{ isSelected(movie) ? 'Deselect' : 'Select' }}
+              </button>
+          
+              <!-- Rating always available -->
+              <mat-form-field class="hiba" appearance="fill" style="width: 100px; margin-left: 10px;">
+                <mat-label>Rate</mat-label>
+                <mat-select [value]="movie.rating || 0" (selectionChange)="rateMovie(movie, $event.value)">
+                  <mat-option *ngFor="let r of [0,1,2,3,4,5]" [value]="r">{{ r }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-template>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <!-- Admin: Add Movie -->
+    <ng-container *ngIf="isAdmin">
+      <div class="actions">
+        <button mat-raised-button color="accent" routerLink="/add-movie">
+          <mat-icon>movie_filter</mat-icon>
+          Add Movie/Series
+        </button>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

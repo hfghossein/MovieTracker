@@ -1,0 +1,41 @@
+<mat-card class="admin-dashboard-card">
+    <mat-card-title>Admin Dashboard</mat-card-title>
+    <mat-card-content>
+      <section class="admin-section">
+        <h2>User Management</h2>
+        <div class="actions">
+          <button mat-raised-button color="accent" (click)="goToAddUser()">
+            <mat-icon>person_add</mat-icon>
+            Add User
+          </button>
+        </div>
+        <mat-list>
+          <mat-list-item *ngFor="let user of users">
+            <div class="user-info">
+              <span>{{ user.username }} ({{ user.role }})</span>
+              <button mat-button color="warn" (click)="removeUser(user.username)">Remove</button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </section>
+  
+      <section class="admin-section">
+        <h2>Movie/Series Management</h2>
+        <div class="actions">
+          <button mat-raised-button color="accent" (click)="goToAddMovie()">
+            <mat-icon>movie_filter</mat-icon>
+            Add Movie/Series
+          </button>
+        </div>
+        <mat-list>
+          <mat-list-item *ngFor="let movie of movies">
+            <div class="movie-info">
+              <span>{{ movie.title }} ({{ movie.genre }})</span>
+              <button mat-button color="warn" (click)="removeMovie(movie.id)">Remove</button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </section>
+    </mat-card-content>
+  </mat-card>
+  
